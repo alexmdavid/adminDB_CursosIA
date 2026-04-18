@@ -191,7 +191,13 @@
                 </select>
             </div>
             <div class="table-actions">
-                <button type="button" class="btn-small secondary" id="exportCsvBtn">Exportar CSV</button>
+                <select id="exportFormat" class="btn-small secondary" style="margin-right: 8px;">
+                    <option value="csv">CSV</option>
+                    <option value="xls">XLS</option>
+                    <option value="pdf">PDF</option>
+                    <option value="word">Word</option>
+                </select>
+                <button type="button" class="btn-small secondary" id="exportBtn">Exportar</button>
                 <button type="button" class="btn-small primary" id="newRecordBtn">Nuevo registro</button>
             </div>
         </div>
@@ -501,26 +507,74 @@
         });
     }
 
-    function exportCsv() {
-        const rows = [
-            ["ID", "Nombre", "Apellidos", "Correo", "Ciudad", "País", "Teléfono"],
-            ...ordenarDatos(aplicarFiltros(docentes)).map(d => [
-                d.id,
-                d.nombres,
-                d.apellidos,
-                d.correo,
-                d.ciudad,
-                d.pais,
-                d.telefono || ""
-            ])
-        ];
-        const csv = rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-        link.download = "docentes.csv";
-        link.click();
-        URL.revokeObjectURL(link.href);
-        mostrarMensaje("Exportado CSV correctamente.", "success");
+    function exportData(format) {
+        const data = ordenarDatos(aplicarFiltros(docentes));
+        const headers = ["ID", "Nombre", "Apellidos", "Correo", "Ciudad", "País", "Teléfono"];
+        const rows = data.map(d => [d.id, d.nombres, d.apellidos, d.correo, d.ciudad, d.pais, d.telefono || ""]);
+
+        if (format === 'csv') {
+            const csv = [headers, ...rows].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+            const blob = new Blob([csv], { type: "text/csv" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "personas.csv";
+            link.click();
+            URL.revokeObjectURL(link.href);
+            mostrarMensaje("Exportado CSV correctamente.", "success");
+        } else if (format === 'xls') {
+            const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Personas");
+            XLSX.writeFile(wb, "personas.xlsx");
+            mostrarMensaje("Exportado XLS correctamente.", "success");
+        } else if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Listado de Personas", 20, 20);
+            doc.autoTable({
+                head: [headers],
+                body: rows,
+                startY: 30
+            });
+            doc.save("personas.pdf");
+            mostrarMensaje("Exportado PDF correctamente.", "success");
+        } else if (format === 'word') {
+            const { Document, Packer, Paragraph, Table, TableCell, TableRow } = window.docx;
+
+            const tableRows = [
+                new TableRow({
+                    children: headers.map(h => new TableCell({ children: [new Paragraph(h)] }))
+                }),
+                ...rows.map(row => new TableRow({
+                    children: row.map(cell => new TableCell({ children: [new Paragraph(String(cell))] }))
+                }))
+            ];
+
+            const table = new Table({
+                rows: tableRows
+            });
+
+            const doc = new Document({
+                sections: [{
+                    children: [
+                        new Paragraph("Listado de Personas"),
+                        table
+                    ]
+                }]
+            });
+
+            Packer.toBlob(doc).then(blob => {
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "personas.docx";
+                link.click();
+                URL.revokeObjectURL(link.href);
+                mostrarMensaje("Exportado Word correctamente.", "success");
+            }).catch(err => {
+                console.error(err);
+                mostrarMensaje("Error al exportar Word.", "error");
+            });
+        }
     }
 
     function editar(d) {
@@ -600,7 +654,12 @@
         renderizarTabla();
     });
 
-    exportCsvBtn.addEventListener("click", exportCsv);
+    const exportFormat = document.getElementById("exportFormat");
+    const exportBtn = document.getElementById("exportBtn");
+    exportBtn.addEventListener("click", () => {
+        const format = exportFormat.value;
+        exportData(format);
+    });
     newRecordBtn.addEventListener("click", () => {
         resetForm();
         mostrarMensaje("Formulario listo para nuevo registro.", "success");
@@ -616,6 +675,11 @@
 
     cargarDocentes();
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script src="https://unpkg.com/docx@6.0.3/build/index.js"></script>
 
 </body>
 </html>
