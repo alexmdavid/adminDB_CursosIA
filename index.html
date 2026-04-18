@@ -2,171 +2,262 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Admin - Docentes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Playdiom</title>
     <style>
+        :root {
+            --primary-green: #00a884;
+            --dark-bg: #075e54;
+            --light-gray: #f0f4f3;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
         body {
-            font-family: Arial;
-            margin: 40px;
-            background: #f5f5f5;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .admin-container {
+            width: 100%;
+            max-width: 1200px; /* Un poco más ancho para acomodar más columnas */
+            background: var(--white);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
         }
 
         h1 {
+            color: var(--primary-green);
             text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        /* --- Tabla con columnas individuales --- */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            margin-bottom: 40px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
         }
 
         th {
-            background: #333;
+            background-color: var(--primary-green);
             color: white;
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
         }
 
-        button {
-            padding: 5px 10px;
-            margin: 2px;
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f1f1;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        tr:hover { background-color: #f9fdfc; }
+
+        /* --- Botones --- */
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .edit { background: orange; }
-        .delete { background: red; color: white; }
+        .edit { background-color: #ffc107; color: #333; margin-right: 4px; }
+        .delete { background-color: #ff5252; color: white; }
+        .btn:hover { opacity: 0.85; transform: translateY(-1px); }
 
-        form {
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
+        /* --- Formulario --- */
+        .form-card {
+            background: #fcfcfc;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #edf2f1;
+        }
+
+        .grid-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-header {
+            grid-column: span 2;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--dark-bg);
         }
 
         input {
-            margin: 5px;
-            padding: 5px;
+            padding: 14px 18px;
+            border: 1.5px solid #dce4e2;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(0, 168, 132, 0.1);
+        }
+
+        .btn-submit {
+            grid-column: span 2;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 16px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--dark-bg);
+        }
+
+        @media (max-width: 768px) {
+            .grid-form { grid-template-columns: 1fr; }
+            .btn-submit, .form-header { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
-<h1>Panel de Administración</h1>
+<div class="admin-container">
+    <h1>Panel de Administración</h1>
 
-<table id="tablaDocentes">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
+    <div class="table-wrapper">
+        <table id="tablaDocentes">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Ciudad</th>
+                    <th>País</th>
+                    <th>WhatsApp / Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-            <th>Correo</th>
-        
-            <th>Ciudad</th>
-            <th>País</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+    <div class="form-card">
+        <form id="formDocente" class="grid-form">
+            <div class="form-header">
+                <h3>Gestionar Docente</h3>
+            </div>
+            
+            <input type="hidden" id="id">
+            
+            <input type="text" id="nombres" placeholder="Nombres" required>
+            <input type="text" id="apellidos" placeholder="Apellidos" required>
+            <input type="email" id="correo" placeholder="Correo electrónico" required>
+            <input type="text" id="ciudad" placeholder="Ciudad" required>
+            <input type="text" id="pais" placeholder="País" required>
+            <input type="text" id="telefono" placeholder="WhatsApp / Teléfono">
 
-<form id="formDocente">
-    <h3>Crear / Editar Docente</h3>
-    <input type="hidden" id="id">
-    <input type="text" id="nombres" placeholder="Nombre" required>
-    <input type="text" id="apellidos" placeholder="Apellidos" required>
-    <input type="text" id="correo" placeholder="Correo" required>
-
-    <input type="text" id="ciudad" placeholder="Ciudad" required>
-    <input type="text" id="pais" placeholder="País" required>
-    <button type="submit">Guardar</button>
-</form>
+            <button type="submit" class="btn-submit">Guardar Registro</button>
+        </form>
+    </div>
+</div>
 
 <script>
-const API = "https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes"; 
+    const API = "https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes"; 
 
-async function cargarDocentes() {
-    const res = await fetch(API);
-    const data = await res.json();
+    async function cargarDocentes() {
+        const res = await fetch(API);
+        const data = await res.json();
+        const tbody = document.querySelector("#tablaDocentes tbody");
+        tbody.innerHTML = "";
 
-    const tbody = document.querySelector("#tablaDocentes tbody");
-    tbody.innerHTML = "";
-
-    data.forEach(d => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${d.id}</td>
-                <td>${d.nombres}</td>
-                <td>${d.apellidos}</td>
-                <td>${d.correo}</td>
-                <td>${d.ciudad}</td>
-                <td>${d.pais}</td>
-                <td>
-                    <button class="edit" onclick='editar(${JSON.stringify(d)})'>Editar</button>
-                    <button class="delete" onclick="eliminar(${d.id})">Eliminar</button>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-function editar(d) {
-    document.getElementById("id").value = d.id;
-    document.getElementById("nombres").value = d.nombres;
-    document.getElementById("apellidos").value = d.apellidos;
-    document.getElementById("correo").value = d.correo;
-    document.getElementById("ciudad").value = d.ciudad;
-    document.getElementById("pais").value = d.pais;
-}
-
-async function eliminar(id) {
-    if (!confirm("¿Eliminar docente?")) return;
-
-    await fetch(`${API}/${id}`, { method: "DELETE" });
-    cargarDocentes();
-}
-
-document.getElementById("formDocente").addEventListener("submit", async e => {
-    e.preventDefault();
-
-    const id = document.getElementById("id").value;
-
-    const docente = {
-        nombres: document.getElementById("nombres").value,
-        apellidos: document.getElementById("apellidos").value,
-        correo: document.getElementById("correo").value,
-        ciudad: document.getElementById("ciudad").value,
-        pais: document.getElementById("pais").value,
-        telefono: "000",
-        institucion: "N/A",
-        cargo: "N/A",
-        areaEnsenanza: "N/A",
-        nivelEducativo: "N/A",
-        aceptaComunicaciones: true
-    };
-
-    if (id) {
-        await fetch(`${API}/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(docente)
-        });
-    } else {
-        await fetch(API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(docente)
+        data.forEach(d => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${d.id}</strong></td>
+                    <td>${d.nombres}</td>
+                    <td>${d.apellidos}</td>
+                    <td>${d.correo}</td>
+                    <td>${d.ciudad}</td>
+                    <td>${d.pais}</td>
+                    <td>${d.telefono || "N/A"}</td>
+                    <td>
+                        <button class="btn edit" onclick='editar(${JSON.stringify(d)})'>Editar</button>
+                        <button class="btn delete" onclick="eliminar(${d.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
         });
     }
 
-    document.getElementById("formDocente").reset();
-    cargarDocentes();
-});
+    function editar(d) {
+        document.getElementById("id").value = d.id;
+        document.getElementById("nombres").value = d.nombres;
+        document.getElementById("apellidos").value = d.apellidos;
+        document.getElementById("correo").value = d.correo;
+        document.getElementById("ciudad").value = d.ciudad;
+        document.getElementById("pais").value = d.pais;
+        document.getElementById("telefono").value = d.telefono || "";
+        document.getElementById("formDocente").scrollIntoView({ behavior: 'smooth' });
+    }
 
-cargarDocentes();
+    async function eliminar(id) {
+        if (!confirm("¿Eliminar este registro?")) return;
+        await fetch(`${API}/${id}`, { method: "DELETE" });
+        cargarDocentes();
+    }
+
+    document.getElementById("formDocente").addEventListener("submit", async e => {
+        e.preventDefault();
+        const id = document.getElementById("id").value;
+        const docente = {
+            nombres: document.getElementById("nombres").value,
+            apellidos: document.getElementById("apellidos").value,
+            correo: document.getElementById("correo").value,
+            ciudad: document.getElementById("ciudad").value,
+            pais: document.getElementById("pais").value,
+            telefono: document.getElementById("telefono").value || "000-000-0000",
+            institucion: "N/A", cargo: "N/A", areaEnsenanza: "N/A", nivelEducativo: "N/A", aceptaComunicaciones: true
+        };
+
+        const method = id ? "PUT" : "POST";
+        const url = id ? `${API}/${id}` : API;
+
+        await fetch(url, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(docente)
+        });
+
+        document.getElementById("formDocente").reset();
+        document.getElementById("id").value = "";
+        cargarDocentes();
+    });
+
+    cargarDocentes();
 </script>
 
 </body>
