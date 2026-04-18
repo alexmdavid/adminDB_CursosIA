@@ -13,126 +13,412 @@
             --text-dark: #2c3e50;
         }
 
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--light-gray); margin: 0; padding: 15px; display: flex; justify-content: center; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #dff4ea; margin: 0; padding: 20px; display: flex; justify-content: center; }
 
-        .admin-container { width: 100%; max-width: 1200px; background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .admin-container { width: 100%; max-width: 1200px; background: #ecfdf5; padding: 30px; border-radius: 28px; box-shadow: 0 18px 45px rgba(0,0,0,0.08); border: 1px solid rgba(0,120,90,0.15); }
 
-        h1 { color: var(--primary-green); text-align: center; font-size: 1.6rem; margin-bottom: 20px; font-weight: 800; }
+        h1 { color: var(--dark-bg); font-size: 2.1rem; margin: 0 0 10px; font-weight: 800; }
+        .dashboard-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; }
+        .dashboard-header .subtext { margin: 0; color: #215844; font-size: 0.95rem; }
 
-        /* Tabla Responsiva Refinada */
-        .table-wrapper { overflow-x: auto; margin-bottom: 20px; border: 1px solid #eee; border-radius: 12px; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th { background-color: #f8faf9; color: var(--text-dark); padding: 14px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--primary-green); }
-        td { padding: 12px; border-bottom: 1px solid #f1f1f1; text-align: center; font-size: 0.85rem; color: #555; }
-        tr:hover { background-color: #f9fdfc; }
+        .cards-row { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .card-summary { background: linear-gradient(135deg, #f2fff8, #ddf7e7); border: 1px solid #c3e8d3; border-radius: 22px; padding: 20px 20px 18px; box-shadow: 0 12px 26px rgba(0,0,0,0.04); }
+        .card-summary:first-child { background: linear-gradient(135deg, #e8fff5, #cdefde); }
+        .card-summary:nth-child(2) { background: linear-gradient(135deg, #fffff7, #eaf7e7); }
+        .card-summary .card-label { display: block; font-size: 0.92rem; color: #1a5f4f; margin-bottom: 8px; }
+        .card-summary .card-value { font-size: 1.8rem; font-weight: 800; color: var(--dark-bg); }
+        .card-summary .card-note { margin-top: 10px; font-size: 0.85rem; color: #3f6f5f; }
 
-        /* Paginación Minimalista */
-        #paginationContainer { display: none; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; }
-        .page-btn { 
-            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-            background: white; color: var(--primary-green); border: 1px solid var(--primary-green); 
-            border-radius: 50%; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
-        }
+        .update-widget { display: inline-flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; padding: 10px 14px; background: rgba(0, 168, 132, 0.14); border: 1px solid #9adeca; border-radius: 999px; min-width: 160px; max-width: 220px; }
+        .update-widget .update-label { font-size: 0.78rem; color: #1d5d49; opacity: 0.9; }
+        .update-widget .update-value { font-size: 1rem; font-weight: 700; color: var(--dark-bg); }
+        .update-widget .update-note { font-size: 0.72rem; color: #3c6e60; opacity: 0.85; line-height: 1.1; }
+
+        .controls-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .controls-left { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .controls-left input,
+        .controls-left select { min-width: 220px; padding: 12px 14px; border: 1.4px solid #badcc9; border-radius: 14px; background: #f7fff8; color: #364a45; }
+        .controls-left input:focus,
+        .controls-left select:focus { outline: none; border-color: var(--primary-green); }
+        .table-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .btn-small { padding: 10px 14px; border-radius: 14px; border: none; cursor: pointer; font-weight: 700; transition: 0.2s; }
+        .btn-small.primary { background: var(--primary-green); color: white; }
+        .btn-small.secondary { background: white; color: var(--dark-bg); border: 1px solid #c6e1d8; }
+        .btn-small.ghost { background: transparent; color: var(--dark-bg); border: 1px solid transparent; }
+        .btn-small:hover { transform: translateY(-1px); }
+
+        .status-message { display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 16px; margin-bottom: 16px; font-size: 0.95rem; }
+        .status-message.show { display: flex; }
+        .status-message.success { background: rgba(2, 118, 83, 0.12); color: #08563c; border: 1px solid #86d2b4; }
+        .status-message.error { background: rgba(153, 27, 27, 0.12); color: #7a1e1e; border: 1px solid #edb7b7; }
+        .status-message span { flex: 1; }
+        .status-message button { border: none; background: transparent; color: inherit; cursor: pointer; font-weight: 700; }
+
+        .loading-overlay { display: none; position: absolute; inset: 0; background: rgba(255,255,255,0.75); align-items: center; justify-content: center; z-index: 5; border-radius: 24px; }
+        .loading-overlay.show { display: flex; }
+        .loading-spinner { width: 44px; height: 44px; border: 4px solid rgba(0,0,0,0.08); border-top-color: var(--primary-green); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .sort-header { cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .sort-header::after { content: '\2191'; font-size: 0.7rem; opacity: 0.35; transform: scaleY(-1); transition: transform 0.2s ease, opacity 0.2s ease; }
+        .sort-header.sorted.asc::after { content: '\2191'; opacity: 1; transform: scaleY(-1); }
+        .sort-header.sorted.desc::after { content: '\2193'; opacity: 1; }
+
+        .no-data-row td { padding: 24px 0; color: #4d6a5f; font-style: italic; }
+
+        .stats-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .stats-card { background: linear-gradient(180deg, #ffffff, #ecfff7); border: 1px solid #bfe6d3; border-radius: 24px; padding: 22px; box-shadow: 0 14px 30px rgba(0,0,0,0.05); }
+        .stat-title { display: block; margin-bottom: 16px; color: var(--dark-bg); font-size: 1rem; font-weight: 700; }
+        .country-bars .stat-line { display: grid; grid-template-columns: 1.25fr 2fr; align-items: center; gap: 12px; margin-bottom: 14px; }
+        .country-bars .stat-country { color: #526a63; font-size: 0.9rem; font-weight: 600; }
+        .country-bars .bar-track { width: 100%; height: 10px; background: #e9f6f1; border-radius: 999px; overflow: hidden; }
+        .country-bars .bar-fill { height: 100%; background: linear-gradient(90deg, #00a884, #075e54); border-radius: 999px; }
+        .chart-info .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #526a63; font-size: 0.92rem; }
+        .chart-info .metric-row strong { color: #213b32; font-size: 1rem; }
+        .progress-row { margin-top: 18px; }
+        .progress-row span { display: block; color: #526a63; font-size: 0.9rem; margin-bottom: 8px; }
+        .progress-track { width: 100%; height: 14px; background: #eaf7f1; border-radius: 999px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #00a884, #075e54); transition: width 0.3s ease; }
+        .progress-label { text-align: right; color: #2c4e44; font-size: 0.88rem; margin-top: 8px; }
+
+        .panel-section { position: relative; background: linear-gradient(180deg, #f7fff8, #eaf9ee); border: 1px solid #c7e8d7; border-radius: 24px; padding: 24px; margin-bottom: 24px; }
+        .section-title { display: block; margin-bottom: 18px; color: var(--dark-bg); font-size: 1.05rem; font-weight: 700; }
+
+        .table-wrapper { overflow-x: auto; margin-bottom: 0; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; background: transparent; }
+        thead th { background-color: var(--primary-green); color: #ffffff; padding: 16px 14px; font-size: 0.80rem; text-transform: uppercase; letter-spacing: 0.06em; border: none; position: sticky; top: 0; }
+        thead th:first-child { border-top-left-radius: 18px; }
+        thead th:last-child { border-top-right-radius: 18px; }
+        tbody tr { background: #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        tbody tr:nth-child(even) { background: #f4fbf8; }
+        tbody tr:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.04); }
+        td { padding: 14px; border-bottom: 1px solid #e9f3ef; text-align: center; font-size: 0.92rem; color: #425450; }
+
+        #paginationContainer { display: none; justify-content: center; align-items: center; gap: 12px; margin: 20px 0 0; }
+        .page-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: white; color: var(--primary-green); border: 1px solid var(--primary-green); border-radius: 50%; cursor: pointer; font-size: 1rem; transition: 0.25s; }
         .page-btn:hover:not(:disabled) { background: var(--primary-green); color: white; }
-        .page-btn:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
-        #pageInfo { font-size: 0.8rem; font-weight: 600; color: var(--dark-bg); }
+        .page-btn:disabled { border-color: #c4d7d0; color: #c4d7d0; cursor: not-allowed; }
+        #pageInfo { font-size: 0.88rem; font-weight: 600; color: var(--dark-bg); }
+        .form-note { margin: 0 auto 18px auto; font-size: 1rem; color: var(--dark-bg); font-weight: 700; text-align: center; }
 
-        /* Acciones Pequeñas */
-        .btn-action { padding: 5px 8px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; transition: 0.2s; margin: 0 2px; }
-        .edit { background-color: #fff3cd; color: #856404; }
-        .delete { background-color: #f8d7da; color: #721c24; }
-        .btn-action:hover { transform: scale(1.1); }
+        .btn-action { padding: 7px 10px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.82rem; transition: 0.2s; margin: 0 2px; }
+        .edit { background-color: #ffefc4; color: #8a6f22; }
+        .delete { background-color: #f7d5da; color: #8c1c2e; }
+        .btn-action:hover { transform: scale(1.05); }
 
-        /* Formulario Grid */
-        .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; padding: 25px; background: #fafafa; border-radius: 15px; }
-        input { padding: 12px; border: 1.5px solid #e0e6e4; border-radius: 10px; outline: none; font-size: 0.9rem; }
-        input:focus { border-color: var(--primary-green); background: white; }
-        .btn-submit { grid-column: span 2; background-color: var(--primary-green); color: white; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .form-card { background: linear-gradient(180deg, #f2fff7, #e2f9ea); border: 1px solid #bfe5d3; border-radius: 24px; padding: 26px; box-shadow: 0 18px 35px rgba(0,0,0,0.05); }
+        .grid-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; margin-top: 0; padding: 0; background: transparent; }
+        input { padding: 14px; border: 1.4px solid #badcc9; border-radius: 14px; outline: none; font-size: 0.95rem; color: #364a45; background: #f7fff8; }
+        input.invalid { border-color: #e27d7d; box-shadow: 0 0 0 3px rgba(226, 125, 125, 0.12); }
+        .actions-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; grid-column: span 2; margin-top: 14px; }
+        input:focus { border-color: var(--primary-green); background: #ffffff; }
+        .btn-submit { width: auto; min-width: 240px; background-color: var(--primary-green); color: white; padding: 15px 30px; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .btn-small.secondary { min-width: 120px; }
         .btn-submit:hover { background-color: var(--dark-bg); }
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
             .grid-form { grid-template-columns: 1fr; }
             .btn-submit { grid-column: span 1; }
+            .dashboard-header { flex-direction: column; align-items: flex-start; }
+            .cards-row, .stats-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="admin-container">
-    <h1>Panel de Administración</h1>
-
-    <div class="table-wrapper">
-        <table id="tablaDocentes">
-            <thead>
-                <tr>
-                    <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Correo</th><th>Ciudad</th><th>País</th><th>Tel</th><th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div class="dashboard-header">
+        <div>
+            <h1>Panel de Administración</h1>
+            <p class="subtext">Accede y gestiona los registros de docentes con tu paleta de colores.</p>
+        </div>
+        <div class="update-widget">
+            <span class="update-label">Última actualización</span>
+            <span class="update-value" id="ultimaActualizacion">---</span>
+            <span class="update-note">Fecha y hora de la carga</span>
+        </div>
     </div>
 
-    <div id="paginationContainer">
-        <button class="page-btn" id="prevBtn" onclick="cambiarPagina(-1)">‹</button>
-        <span id="pageInfo">Página 1</span>
-        <button class="page-btn" id="nextBtn" onclick="cambiarPagina(1)">›</button>
+    <div class="cards-row">
+        <div class="card-summary">
+            <span class="card-label">Total docentes</span>
+            <span class="card-value" id="totalDocentes">0</span>
+            <span class="card-note">Registros cargados desde la API</span>
+        </div>
+        <div class="card-summary">
+            <span class="card-label">Página actual</span>
+            <span class="card-value" id="paginaActualCard">1</span>
+            <span class="card-note">Muestra la página de la tabla activada</span>
+        </div>
     </div>
 
-    <form id="formDocente" class="grid-form">
+    <div class="stats-row">
+        <div class="stats-card">
+            <span class="stat-title">Distribución por país</span>
+            <div class="country-bars" id="countryBars">
+                <div class="stat-line">
+                    <span class="stat-country">Sin datos</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="stats-card">
+            <span class="stat-title">Actividad de la tabla</span>
+            <div class="chart-info">
+                <div class="metric-row"><span>Registros totales</span><strong id="metricTotal">0</strong></div>
+                <div class="metric-row"><span>Página actual</span><strong id="metricPage">1</strong></div>
+                <div class="metric-row"><span>Registros por página</span><strong id="metricPerPage">15</strong></div>
+                <div class="progress-row">
+                    <span>Ocupación de la página</span>
+                    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+                    <span class="progress-label" id="progressLabel">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-section">
+        <span class="section-title">Listado de docentes</span>
+        <div id="statusMessage" class="status-message success">
+            <span id="statusMessageText">Bienvenido, los datos se actualizarán automáticamente.</span>
+            <button type="button" onclick="ocultarMensaje()">Cerrar</button>
+        </div>
+        <div class="controls-row">
+            <div class="controls-left">
+                <input type="text" id="searchInput" placeholder="Buscar por nombre, correo o país...">
+                <select id="countryFilter">
+                    <option value="all">Todos los países</option>
+                </select>
+            </div>
+            <div class="table-actions">
+                <button type="button" class="btn-small secondary" id="exportCsvBtn">Exportar CSV</button>
+                <button type="button" class="btn-small primary" id="newRecordBtn">Nuevo registro</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <div class="loading-overlay" id="loadingOverlay"><div class="loading-spinner"></div></div>
+            <table id="tablaDocentes">
+                <thead>
+                    <tr>
+                        <th><span class="sort-header" data-col="id">ID</span></th>
+                        <th><span class="sort-header" data-col="nombres">Nombre</span></th>
+                        <th><span class="sort-header" data-col="apellidos">Apellidos</span></th>
+                        <th><span class="sort-header" data-col="correo">Correo</span></th>
+                        <th><span class="sort-header" data-col="ciudad">Ciudad</span></th>
+                        <th><span class="sort-header" data-col="pais">País</span></th>
+                        <th><span class="sort-header" data-col="telefono">Tel</span></th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="paginationContainer">
+            <button class="page-btn" id="prevBtn" onclick="cambiarPagina(-1)">‹</button>
+            <span id="pageInfo">Página 1</span>
+            <button class="page-btn" id="nextBtn" onclick="cambiarPagina(1)">›</button>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <p class="form-note">Nuevo registro</p>
+        <form id="formDocente" class="grid-form">
         <input type="hidden" id="id">
-        <input type="text" id="nombres" placeholder="Nombres" required>
-        <input type="text" id="apellidos" placeholder="Apellidos" required>
-        <input type="email" id="correo" placeholder="Correo electrónico" required>
-        <input type="text" id="ciudad" placeholder="Ciudad" required>
-        <input type="text" id="pais" placeholder="País" required>
-        <input type="text" id="telefono" placeholder="WhatsApp / Teléfono">
-        <button type="submit" class="btn-submit">Guardar Registro</button>
+        <div>
+            <input type="text" id="nombres" placeholder="Nombres" required>
+        </div>
+        <div>
+            <input type="text" id="apellidos" placeholder="Apellidos" required>
+        </div>
+        <div>
+            <input type="email" id="correo" placeholder="Correo electrónico" required>
+        </div>
+        <div>
+            <input type="text" id="ciudad" placeholder="Ciudad" required>
+        </div>
+        <div>
+            <input type="text" id="pais" placeholder="País" required>
+        </div>
+        <div>
+            <input type="text" id="telefono" placeholder="WhatsApp / Teléfono">
+        </div>
+        <div class="actions-row">
+            <button type="button" class="btn-small secondary" id="cancelEditBtn">Limpiar</button>
+            <button type="submit" class="btn-submit">Guardar Registro</button>
+        </div>
     </form>
+    </div>
 </div>
 
 <script>
-    const API = "https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes"; 
+    const API = "https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes";
     let docentes = [];
     let paginaActual = 1;
     const registrosPorPagina = 15;
+    let sortColumn = "id";
+    let sortDirection = 1;
+    let filtros = { search: "", country: "all" };
+    let statusTimeout = null;
 
-    async function cargarDocentes() {
-        const res = await fetch(API);
-        docentes = await res.json();
-        renderizarTabla();
+    const statusMessage = document.getElementById("statusMessage");
+    const statusText = document.getElementById("statusMessageText");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    const searchInput = document.getElementById("searchInput");
+    const countryFilter = document.getElementById("countryFilter");
+    const exportCsvBtn = document.getElementById("exportCsvBtn");
+    const newRecordBtn = document.getElementById("newRecordBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+    const formDocente = document.getElementById("formDocente");
+    const formNote = document.querySelector(".form-note");
+    const tableHeaders = Array.from(document.querySelectorAll(".sort-header"));
+
+    const inputs = {
+        nombres: document.getElementById("nombres"),
+        apellidos: document.getElementById("apellidos"),
+        correo: document.getElementById("correo"),
+        ciudad: document.getElementById("ciudad"),
+        pais: document.getElementById("pais"),
+        telefono: document.getElementById("telefono")
+    };
+
+    function showLoading(show) {
+        loadingOverlay.classList.toggle("show", show);
+    }
+
+    function mostrarMensaje(text, type = "success") {
+        clearTimeout(statusTimeout);
+        statusText.innerText = text;
+        statusMessage.className = `status-message show ${type}`;
+        statusTimeout = setTimeout(() => ocultarMensaje(), 4000);
+    }
+
+    function ocultarMensaje() {
+        statusMessage.className = "status-message";
+    }
+
+    function clearValidation() {
+        Object.values(inputs).forEach(field => field.classList.remove("invalid"));
+    }
+
+    function validarFormulario() {
+        clearValidation();
+        let valid = true;
+
+        if (!inputs.nombres.value.trim()) {
+            inputs.nombres.classList.add("invalid");
+            valid = false;
+        }
+        if (!inputs.apellidos.value.trim()) {
+            inputs.apellidos.classList.add("invalid");
+            valid = false;
+        }
+        const correoValor = inputs.correo.value.trim();
+        if (!correoValor || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoValor)) {
+            inputs.correo.classList.add("invalid");
+            valid = false;
+        }
+        if (!inputs.ciudad.value.trim()) {
+            inputs.ciudad.classList.add("invalid");
+            valid = false;
+        }
+        if (!inputs.pais.value.trim()) {
+            inputs.pais.classList.add("invalid");
+            valid = false;
+        }
+        if (inputs.telefono.value.trim() && !/^[0-9+()\-\.\s]*$/.test(inputs.telefono.value.trim())) {
+            inputs.telefono.classList.add("invalid");
+            valid = false;
+        }
+
+        if (!valid) {
+            mostrarMensaje("Revisa los campos en rojo antes de guardar.", "error");
+        }
+
+        return valid;
+    }
+
+    function resetForm() {
+        formDocente.reset();
+        document.getElementById("id").value = "";
+        clearValidation();
+        setFormState(false);
+    }
+
+    function setFormState(editing) {
+        const submitButton = document.querySelector(".btn-submit");
+        submitButton.textContent = editing ? "Actualizar Registro" : "Guardar Registro";
+        formNote.textContent = editing ? "Editar registro" : "Nuevo registro";
+    }
+
+    function cargarDocentes() {
+        showLoading(true);
+        fetch(API)
+            .then(res => res.json())
+            .then(data => {
+                docentes = Array.isArray(data) ? data : [];
+                paginaActual = 1;
+                actualizarFiltros();
+                renderizarTabla();
+                mostrarMensaje("Datos cargados correctamente.", "success");
+            })
+            .catch(() => mostrarMensaje("Error cargando datos de la API.", "error"))
+            .finally(() => showLoading(false));
+    }
+
+    function aplicarFiltros(datos) {
+        return datos.filter(d => {
+            const texto = `${d.nombres} ${d.apellidos} ${d.correo} ${d.ciudad} ${d.pais}`.toLowerCase();
+            const busqueda = filtros.search.toLowerCase();
+            const pasaBusqueda = !busqueda || texto.includes(busqueda);
+            const pasaPais = filtros.country === "all" || (d.pais?.trim() === filtros.country);
+            return pasaBusqueda && pasaPais;
+        });
+    }
+
+    function ordenarDatos(datos) {
+        return [...datos].sort((a, b) => {
+            const va = a[sortColumn] || "";
+            const vb = b[sortColumn] || "";
+            const isNumber = sortColumn === "id";
+            if (isNumber) {
+                return sortDirection * (Number(va) - Number(vb));
+            }
+            return sortDirection * String(va).localeCompare(String(vb), "es", { numeric: true });
+        });
     }
 
     function renderizarTabla() {
         const tbody = document.querySelector("#tablaDocentes tbody");
-        tbody.innerHTML = "";
-        
+        const datosFiltrados = aplicarFiltros(docentes);
+        const totalPaginas = Math.max(1, Math.ceil(datosFiltrados.length / registrosPorPagina));
+        if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+
+        const datosOrdenados = ordenarDatos(datosFiltrados);
         const inicio = (paginaActual - 1) * registrosPorPagina;
         const fin = inicio + registrosPorPagina;
-        const datosPagina = docentes.slice(inicio, fin);
+        const datosPagina = datosOrdenados.slice(inicio, fin);
 
-        datosPagina.forEach(d => {
-            tbody.innerHTML += `
-                <tr>
-                    <td><strong>${d.id}</strong></td>
-                    <td>${d.nombres}</td>
-                    <td>${d.apellidos}</td>
-                    <td>${d.correo}</td>
-                    <td>${d.ciudad}</td>
-                    <td>${d.pais}</td>
-                    <td>${d.telefono || "N/A"}</td>
-                    <td>
-                        <button class="btn-action edit" onclick='editar(${JSON.stringify(d)})' title="Editar">✎</button>
-                        <button class="btn-action delete" onclick="eliminar(${d.id})" title="Eliminar">✖</button>
-                    </td>
-                </tr>
-            `;
-        });
+        tbody.innerHTML = datosPagina.length === 0 ? `
+            <tr class="no-data-row"><td colspan="8">No hay registros que coincidan con los filtros.</td></tr>
+        ` : datosPagina.map(d => `
+            <tr>
+                <td><strong>${d.id}</strong></td>
+                <td>${d.nombres}</td>
+                <td>${d.apellidos}</td>
+                <td>${d.correo}</td>
+                <td>${d.ciudad}</td>
+                <td>${d.pais}</td>
+                <td>${d.telefono || "N/A"}</td>
+                <td>
+                    <button class="btn-action edit" onclick='editar(${JSON.stringify(d)})' title="Editar">✎</button>
+                    <button class="btn-action delete" onclick="eliminar(${d.id})" title="Eliminar">✖</button>
+                </td>
+            </tr>
+        `).join("");
 
-        // Lógica de visibilidad de paginación
-        const totalPaginas = Math.ceil(docentes.length / registrosPorPagina);
         const paginacion = document.getElementById("paginationContainer");
-        
-        if (docentes.length > registrosPorPagina) {
+        if (datosFiltrados.length > registrosPorPagina) {
             paginacion.style.display = "flex";
             document.getElementById("pageInfo").innerText = `${paginaActual} / ${totalPaginas}`;
             document.getElementById("prevBtn").disabled = paginaActual === 1;
@@ -140,6 +426,55 @@
         } else {
             paginacion.style.display = "none";
         }
+
+        actualizarTarjetas(datosPagina.length, totalPaginas, datosFiltrados.length);
+        actualizarSortHeaders();
+    }
+
+    function actualizarTarjetas(visibleCount, totalPaginas, totalFiltrados) {
+        document.getElementById("totalDocentes").innerText = docentes.length;
+        document.getElementById("paginaActualCard").innerText = paginaActual;
+        document.getElementById("metricTotal").innerText = totalFiltrados;
+        document.getElementById("metricPage").innerText = paginaActual;
+        document.getElementById("metricPerPage").innerText = registrosPorPagina;
+        const fill = totalFiltrados === 0 ? 0 : Math.round((visibleCount / registrosPorPagina) * 100);
+        document.getElementById("progressFill").style.width = `${fill}%`;
+        document.getElementById("progressLabel").innerText = `${fill}%`;
+        document.getElementById("ultimaActualizacion").innerText = new Date().toLocaleString("es-ES", { hour12: false });
+        actualizarDistribucionPais(aplicarFiltros(docentes));
+    }
+
+    function actualizarFiltros() {
+        const paises = [...new Set(docentes.map(d => d.pais?.trim() || "Sin país"))].sort((a, b) => a.localeCompare(b, "es", { numeric: true }));
+        countryFilter.innerHTML = "<option value=\"all\">Todos los países</option>" + paises.map(pais => `<option value="${pais}">${pais}</option>`).join("");
+    }
+
+    function actualizarDistribucionPais(datos) {
+        const conteo = datos.reduce((acc, d) => {
+            const pais = d.pais?.trim() || "Sin país";
+            acc[pais] = (acc[pais] || 0) + 1;
+            return acc;
+        }, {});
+
+        const entries = Object.entries(conteo).sort((a, b) => b[1] - a[1]);
+        const max = entries.length ? entries[0][1] : 1;
+        const top = entries.slice(0, 4);
+        const countryBars = document.getElementById("countryBars");
+
+        if (top.length === 0) {
+            countryBars.innerHTML = `<div class="stat-line"><span class="stat-country">Sin datos</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>`;
+            return;
+        }
+
+        countryBars.innerHTML = top.map(([pais, cantidad]) => {
+            const porcentaje = Math.round((cantidad / max) * 100);
+            return `
+                <div class="stat-line">
+                    <span class="stat-country">${pais} (${cantidad})</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:${porcentaje}%"></div></div>
+                </div>
+            `;
+        }).join("");
     }
 
     function cambiarPagina(direccion) {
@@ -147,48 +482,136 @@
         renderizarTabla();
     }
 
+    function toggleSort(col) {
+        if (sortColumn === col) {
+            sortDirection *= -1;
+        } else {
+            sortColumn = col;
+            sortDirection = 1;
+        }
+        renderizarTabla();
+    }
+
+    function actualizarSortHeaders() {
+        tableHeaders.forEach(header => {
+            const isActive = header.dataset.col === sortColumn;
+            header.classList.toggle("sorted", isActive);
+            header.classList.toggle("asc", isActive && sortDirection === 1);
+            header.classList.toggle("desc", isActive && sortDirection === -1);
+        });
+    }
+
+    function exportCsv() {
+        const rows = [
+            ["ID", "Nombre", "Apellidos", "Correo", "Ciudad", "País", "Teléfono"],
+            ...ordenarDatos(aplicarFiltros(docentes)).map(d => [
+                d.id,
+                d.nombres,
+                d.apellidos,
+                d.correo,
+                d.ciudad,
+                d.pais,
+                d.telefono || ""
+            ])
+        ];
+        const csv = rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+        link.download = "docentes.csv";
+        link.click();
+        URL.revokeObjectURL(link.href);
+        mostrarMensaje("Exportado CSV correctamente.", "success");
+    }
+
     function editar(d) {
         document.getElementById("id").value = d.id;
-        document.getElementById("nombres").value = d.nombres;
-        document.getElementById("apellidos").value = d.apellidos;
-        document.getElementById("correo").value = d.correo;
-        document.getElementById("ciudad").value = d.ciudad;
-        document.getElementById("pais").value = d.pais;
-        document.getElementById("telefono").value = d.telefono || "";
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        inputs.nombres.value = d.nombres;
+        inputs.apellidos.value = d.apellidos;
+        inputs.correo.value = d.correo;
+        inputs.ciudad.value = d.ciudad;
+        inputs.pais.value = d.pais;
+        inputs.telefono.value = d.telefono || "";
+        setFormState(true);
+        window.scrollTo({ top: document.querySelector(".form-card").offsetTop, behavior: 'smooth' });
+        mostrarMensaje("Cargando datos del registro para editar.", "success");
     }
 
     async function eliminar(id) {
         if (!confirm("¿Eliminar este registro?")) return;
-        await fetch(`${API}/${id}`, { method: "DELETE" });
-        await cargarDocentes();
+        showLoading(true);
+        try {
+            await fetch(`${API}/${id}`, { method: "DELETE" });
+            mostrarMensaje("Registro eliminado.", "success");
+            cargarDocentes();
+        } catch (error) {
+            mostrarMensaje("No se pudo eliminar el registro.", "error");
+        } finally {
+            showLoading(false);
+        }
     }
 
-    document.getElementById("formDocente").addEventListener("submit", async e => {
+    formDocente.addEventListener("submit", async e => {
         e.preventDefault();
+        if (!validarFormulario()) return;
+
         const id = document.getElementById("id").value;
         const docente = {
-            nombres: document.getElementById("nombres").value,
-            apellidos: document.getElementById("apellidos").value,
-            correo: document.getElementById("correo").value,
-            ciudad: document.getElementById("ciudad").value,
-            pais: document.getElementById("pais").value,
-            telefono: document.getElementById("telefono").value || "000",
-            institucion: "N/A", cargo: "N/A", areaEnsenanza: "N/A", nivelEducativo: "N/A", aceptaComunicaciones: true
+            nombres: inputs.nombres.value.trim(),
+            apellidos: inputs.apellidos.value.trim(),
+            correo: inputs.correo.value.trim(),
+            ciudad: inputs.ciudad.value.trim(),
+            pais: inputs.pais.value.trim(),
+            telefono: inputs.telefono.value.trim() || "000",
+            institucion: "N/A",
+            cargo: "N/A",
+            areaEnsenanza: "N/A",
+            nivelEducativo: "N/A",
+            aceptaComunicaciones: true
         };
 
-        const method = id ? "PUT" : "POST";
-        const url = id ? `${API}/${id}` : API;
+        showLoading(true);
+        try {
+            const method = id ? "PUT" : "POST";
+            const url = id ? `${API}/${id}` : API;
+            await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(docente)
+            });
+            mostrarMensaje(id ? "Registro actualizado correctamente." : "Registro guardado correctamente.", "success");
+            resetForm();
+            cargarDocentes();
+        } catch (error) {
+            mostrarMensaje("Error al guardar el registro.", "error");
+        } finally {
+            showLoading(false);
+        }
+    });
 
-        await fetch(url, {
-            method: method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(docente)
-        });
+    searchInput.addEventListener("input", () => {
+        filtros.search = searchInput.value;
+        paginaActual = 1;
+        renderizarTabla();
+    });
 
-        document.getElementById("formDocente").reset();
-        document.getElementById("id").value = "";
-        await cargarDocentes();
+    countryFilter.addEventListener("change", () => {
+        filtros.country = countryFilter.value;
+        paginaActual = 1;
+        renderizarTabla();
+    });
+
+    exportCsvBtn.addEventListener("click", exportCsv);
+    newRecordBtn.addEventListener("click", () => {
+        resetForm();
+        mostrarMensaje("Formulario listo para nuevo registro.", "success");
+    });
+    cancelEditBtn.addEventListener("click", () => {
+        resetForm();
+        mostrarMensaje("Campos limpiados.", "success");
+    });
+
+    tableHeaders.forEach(header => {
+        header.addEventListener("click", () => toggleSort(header.dataset.col));
     });
 
     cargarDocentes();
