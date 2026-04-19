@@ -116,11 +116,52 @@
         .btn-small.secondary { min-width: 120px; }
         .btn-submit:hover { background-color: var(--dark-bg); }
 
-        @media (max-width: 800px) {
-            .grid-form { grid-template-columns: 1fr; }
-            .btn-submit { grid-column: span 1; }
-            .dashboard-header { flex-direction: column; align-items: flex-start; }
+        @media (max-width: 900px) {
+            body { padding: 14px; }
+            .admin-container { padding: 24px; }
+            .dashboard-header { flex-direction: column; align-items: stretch; }
+            .dashboard-header > div { width: 100%; }
             .cards-row, .stats-row { grid-template-columns: 1fr; }
+            .cards-row { gap: 14px; }
+            .stats-row { gap: 14px; }
+            .controls-row { flex-direction: column; align-items: stretch; gap: 14px; }
+            .controls-left { flex-direction: column; width: 100%; }
+            .controls-left input, .controls-left select { min-width: 100%; width: 100%; }
+            .table-actions { justify-content: flex-start; width: 100%; flex-wrap: wrap; }
+            .table-actions select, .table-actions .btn-small { min-width: 120px; width: auto; }
+            .panel-section { padding: 20px; }
+            .form-card { padding: 22px; }
+            .actions-row { justify-content: stretch; }
+            .btn-small, .btn-submit { width: 100%; min-width: 0; }
+            .btn-submit { padding: 14px 16px; }
+        }
+
+        @media (max-width: 680px) {
+            .admin-container { border-radius: 22px; }
+            .card-summary, .stats-card, .panel-section, .form-card { padding: 18px; }
+            .dashboard-header { gap: 12px; }
+            .dashboard-header h1 { font-size: 1.8rem; }
+            .subtext { font-size: 0.92rem; }
+            .controls-left input, .controls-left select, .table-actions select { font-size: 0.95rem; }
+            .table-wrapper { margin-bottom: 16px; }
+            table { min-width: 0; }
+            thead th, td { padding: 12px 10px; font-size: 0.82rem; text-align: left; }
+            thead th:first-child, thead th:last-child { border-radius: 0; }
+            tbody tr { display: block; margin-bottom: 14px; border-radius: 18px; box-shadow: 0 12px 24px rgba(0,0,0,0.05); }
+            tbody tr td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e9f3ef; }
+            tbody tr td:last-child { border-bottom: none; }
+            tbody tr td::before { content: attr(data-label); flex: 1; color: #5a7a70; font-weight: 700; margin-right: 8px; }
+            tbody tr td:nth-child(1)::before { content: "ID"; }
+            tbody tr td:nth-child(2)::before { content: "Nombre"; }
+            tbody tr td:nth-child(3)::before { content: "Apellidos"; }
+            tbody tr td:nth-child(4)::before { content: "Correo"; }
+            tbody tr td:nth-child(5)::before { content: "Ciudad"; }
+            tbody tr td:nth-child(6)::before { content: "País"; }
+            tbody tr td:nth-child(7)::before { content: "Tel"; }
+            tbody tr td:nth-child(8)::before { content: "Acciones"; }
+            .stat-country { font-size: 0.82rem; }
+            .metric-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .progress-label { text-align: left; }
         }
     </style>
 </head>
@@ -409,14 +450,14 @@
             <tr class="no-data-row"><td colspan="8">No hay registros que coincidan con los filtros.</td></tr>
         ` : datosPagina.map(d => `
             <tr>
-                <td><strong>${d.id}</strong></td>
-                <td>${d.nombres}</td>
-                <td>${d.apellidos}</td>
-                <td>${d.correo}</td>
-                <td>${d.ciudad}</td>
-                <td>${d.pais}</td>
-                <td>${d.telefono || "N/A"}</td>
-                <td>
+                <td data-label="ID"><strong>${d.id}</strong></td>
+                <td data-label="Nombre">${d.nombres}</td>
+                <td data-label="Apellidos">${d.apellidos}</td>
+                <td data-label="Correo">${d.correo}</td>
+                <td data-label="Ciudad">${d.ciudad}</td>
+                <td data-label="País">${d.pais}</td>
+                <td data-label="Tel">${d.telefono || "N/A"}</td>
+                <td data-label="Acciones">
                     <button class="btn-action edit" onclick='editar(${JSON.stringify(d)})' title="Editar">✎</button>
                     <button class="btn-action delete" onclick="eliminar(${d.id})" title="Eliminar">✖</button>
                 </td>
