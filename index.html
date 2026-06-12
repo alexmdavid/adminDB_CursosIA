@@ -13,35 +13,37 @@
             --text-dark: #2c3e50;
         }
 
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #dff4ea; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        *, *::before, *::after { box-sizing: border-box; }
 
-        .admin-container { width: 100%; max-width: 1200px; background: #ecfdf5; padding: 30px; border-radius: 28px; box-shadow: 0 18px 45px rgba(0,0,0,0.08); border: 1px solid rgba(0,120,90,0.15); }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #dff4ea; margin: 0; padding: 16px; display: flex; justify-content: center; overflow-x: hidden; }
 
-        h1 { color: var(--dark-bg); font-size: 2.1rem; margin: 0 0 10px; font-weight: 800; }
-        .dashboard-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; }
-        .dashboard-header .subtext { margin: 0; color: #215844; font-size: 0.95rem; }
+        .admin-container { width: 100%; max-width: 1200px; background: #ecfdf5; padding: 24px; border-radius: 20px; box-shadow: 0 18px 45px rgba(0,0,0,0.08); border: 1px solid rgba(0,120,90,0.15); box-sizing: border-box; }
 
-        .cards-row { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .card-summary { background: linear-gradient(135deg, #f2fff8, #ddf7e7); border: 1px solid #c3e8d3; border-radius: 22px; padding: 20px 20px 18px; box-shadow: 0 12px 26px rgba(0,0,0,0.04); }
+        h1 { color: var(--dark-bg); font-size: clamp(1.5rem, 5vw, 2.1rem); margin: 0 0 10px; font-weight: 800; }
+        .dashboard-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; }
+        .dashboard-header .subtext { margin: 0; color: #215844; font-size: clamp(0.85rem, 2.5vw, 0.95rem); }
+
+        .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .card-summary { background: linear-gradient(135deg, #f2fff8, #ddf7e7); border: 1px solid #c3e8d3; border-radius: 20px; padding: clamp(16px, 4vw, 20px); box-shadow: 0 12px 26px rgba(0,0,0,0.04); }
         .card-summary:first-child { background: linear-gradient(135deg, #e8fff5, #cdefde); }
         .card-summary:nth-child(2) { background: linear-gradient(135deg, #fffff7, #eaf7e7); }
-        .card-summary .card-label { display: block; font-size: 0.92rem; color: #1a5f4f; margin-bottom: 8px; }
-        .card-summary .card-value { font-size: 1.8rem; font-weight: 800; color: var(--dark-bg); }
-        .card-summary .card-note { margin-top: 10px; font-size: 0.85rem; color: #3f6f5f; }
+        .card-summary .card-label { display: block; font-size: clamp(0.85rem, 2vw, 0.92rem); color: #1a5f4f; margin-bottom: 8px; }
+        .card-summary .card-value { font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 800; color: var(--dark-bg); }
+        .card-summary .card-note { margin-top: 10px; font-size: clamp(0.75rem, 2vw, 0.85rem); color: #3f6f5f; }
 
-        .update-widget { display: inline-flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; padding: 10px 14px; background: rgba(0, 168, 132, 0.14); border: 1px solid #9adeca; border-radius: 999px; min-width: 160px; max-width: 220px; }
-        .update-widget .update-label { font-size: 0.78rem; color: #1d5d49; opacity: 0.9; }
-        .update-widget .update-value { font-size: 1rem; font-weight: 700; color: var(--dark-bg); }
-        .update-widget .update-note { font-size: 0.72rem; color: #3c6e60; opacity: 0.85; line-height: 1.1; }
+        .update-widget { display: inline-flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; padding: clamp(8px, 2vw, 10px) clamp(10px, 2.5vw, 14px); background: rgba(0, 168, 132, 0.14); border: 1px solid #9adeca; border-radius: 999px; min-width: 140px; max-width: 200px; font-size: clamp(0.75rem, 2vw, 0.9rem); }
+        .update-widget .update-label { font-size: clamp(0.65rem, 1.5vw, 0.78rem); color: #1d5d49; opacity: 0.9; }
+        .update-widget .update-value { font-size: clamp(0.85rem, 2vw, 1rem); font-weight: 700; color: var(--dark-bg); }
+        .update-widget .update-note { font-size: clamp(0.6rem, 1.5vw, 0.72rem); color: #3c6e60; opacity: 0.85; line-height: 1.1; }
 
         .controls-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .controls-left { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .controls-left { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; flex: 1; min-width: 200px; }
         .controls-left input,
-        .controls-left select { min-width: 220px; padding: 12px 14px; border: 1.4px solid #badcc9; border-radius: 14px; background: #f7fff8; color: #364a45; }
+        .controls-left select { flex: 1; min-width: 160px; padding: 12px 14px; border: 1.4px solid #badcc9; border-radius: 12px; background: #f7fff8; color: #364a45; font-size: clamp(0.9rem, 2vw, 0.95rem); }
         .controls-left input:focus,
         .controls-left select:focus { outline: none; border-color: var(--primary-green); }
         .table-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-        .btn-small { padding: 10px 14px; border-radius: 14px; border: none; cursor: pointer; font-weight: 700; transition: 0.2s; }
+        .btn-small { padding: clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px); border-radius: 12px; border: none; cursor: pointer; font-weight: 700; transition: 0.2s; font-size: clamp(0.8rem, 2vw, 0.85rem); }
         .btn-small.primary { background: var(--primary-green); color: white; }
         .btn-small.secondary { background: white; color: var(--dark-bg); border: 1px solid #c6e1d8; }
         .btn-small.ghost { background: transparent; color: var(--dark-bg); border: 1px solid transparent; }
@@ -65,10 +67,11 @@
         .sort-header.sorted.desc::after { content: '\2193'; opacity: 1; }
 
         .no-data-row td { padding: 24px 0; color: #4d6a5f; font-style: italic; }
+        .no-data-row td::before { display: none !important; }
 
-        .stats-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; margin-bottom: 24px; }
-        .stats-card { background: linear-gradient(180deg, #ffffff, #ecfff7); border: 1px solid #bfe6d3; border-radius: 24px; padding: 22px; box-shadow: 0 14px 30px rgba(0,0,0,0.05); }
-        .stat-title { display: block; margin-bottom: 16px; color: var(--dark-bg); font-size: 1rem; font-weight: 700; }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stats-card { background: linear-gradient(180deg, #ffffff, #ecfff7); border: 1px solid #bfe6d3; border-radius: 20px; padding: clamp(18px, 5vw, 22px); box-shadow: 0 14px 30px rgba(0,0,0,0.05); }
+        .stat-title { display: block; margin-bottom: 16px; color: var(--dark-bg); font-size: clamp(0.95rem, 2.5vw, 1rem); font-weight: 700; }
         .country-bars .stat-line { display: grid; grid-template-columns: 1.25fr 2fr; align-items: center; gap: 12px; margin-bottom: 14px; }
         .country-bars .stat-country { color: #526a63; font-size: 0.9rem; font-weight: 600; }
         .country-bars .bar-track { width: 100%; height: 10px; background: #e9f6f1; border-radius: 999px; overflow: hidden; }
@@ -102,56 +105,99 @@
         #pageInfo { font-size: 0.88rem; font-weight: 600; color: var(--dark-bg); }
         .form-note { margin: 0 auto 18px auto; font-size: 1rem; color: var(--dark-bg); font-weight: 700; text-align: center; }
 
+        /* ===== LOGIN ===== */
+        .login-overlay { position: fixed; inset: 0; background: linear-gradient(135deg, #dff4ea 0%, #b8e6d0 50%, #dff4ea 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 16px; }
+        .login-card { background: #ecfdf5; border: 1px solid rgba(0,120,90,0.15); border-radius: 24px; padding: clamp(28px, 6vw, 40px); width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.10); text-align: center; }
+        .login-card .login-logo { width: 72px; height: 72px; background: linear-gradient(135deg, var(--primary-green), var(--dark-bg)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: white; box-shadow: 0 8px 24px rgba(0,168,132,0.3); }
+        .login-card h2 { color: var(--dark-bg); font-size: clamp(1.3rem, 4vw, 1.6rem); margin: 0 0 6px; font-weight: 800; }
+        .login-card .login-sub { color: #4a7a6a; font-size: 0.9rem; margin: 0 0 28px; }
+        .login-card .login-field { margin-bottom: 16px; text-align: left; }
+        .login-card .login-field label { display: block; font-size: 0.82rem; font-weight: 700; color: #1d5d49; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+        .login-card .login-field input { width: 100%; padding: 14px 16px; border: 1.4px solid #badcc9; border-radius: 12px; background: #f7fff8; color: #364a45; font-size: 0.95rem; box-sizing: border-box; }
+        .login-card .login-field input:focus { outline: none; border-color: var(--primary-green); background: #ffffff; }
+        .login-card .login-field input.invalid { border-color: #e27d7d; box-shadow: 0 0 0 3px rgba(226, 125, 125, 0.12); }
+        .login-btn { width: 100%; padding: 14px; background: var(--primary-green); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; margin-top: 8px; }
+        .login-btn:hover { background: var(--dark-bg); transform: translateY(-1px); }
+        .login-btn:active { transform: translateY(0); }
+        .login-error { display: none; margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: rgba(153, 27, 27, 0.12); color: #7a1e1e; border: 1px solid #edb7b7; font-size: 0.88rem; }
+        .login-error.show { display: block; }
+        .login-footer { margin-top: 22px; font-size: 0.75rem; color: #8aa89e; }
+
+        .logout-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.35); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.82rem; transition: 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .logout-btn:hover { background: rgba(255,255,255,0.35); transform: translateY(-1px); }
+
         .btn-action { padding: 7px 10px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.82rem; transition: 0.2s; margin: 0 2px; }
         .edit { background-color: #ffefc4; color: #8a6f22; }
         .delete { background-color: #f7d5da; color: #8c1c2e; }
         .btn-action:hover { transform: scale(1.05); }
 
-        .form-card { background: linear-gradient(180deg, #f2fff7, #e2f9ea); border: 1px solid #bfe5d3; border-radius: 24px; padding: 26px; box-shadow: 0 18px 35px rgba(0,0,0,0.05); }
-        .grid-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; margin-top: 0; padding: 0; background: transparent; }
-        input { padding: 14px; border: 1.4px solid #badcc9; border-radius: 14px; outline: none; font-size: 0.95rem; color: #364a45; background: #f7fff8; }
+        .form-card { background: linear-gradient(180deg, #f2fff7, #e2f9ea); border: 1px solid #bfe5d3; border-radius: 20px; padding: clamp(20px, 5vw, 26px); box-shadow: 0 18px 35px rgba(0,0,0,0.05); }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 20px; border-radius: 18px; }
+            .login-card .login-logo { width: 60px; height: 60px; font-size: 1.6rem; margin-bottom: 16px; }
+        }
+        .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: clamp(14px, 3vw, 24px); margin-top: 0; padding: 0; background: transparent; }
+        input { padding: clamp(12px, 3vw, 14px); border: 1.4px solid #badcc9; border-radius: 12px; outline: none; font-size: clamp(0.9rem, 2vw, 0.95rem); color: #364a45; background: #f7fff8; width: 100%; box-sizing: border-box; }
         input.invalid { border-color: #e27d7d; box-shadow: 0 0 0 3px rgba(226, 125, 125, 0.12); }
         .actions-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; grid-column: span 2; margin-top: 14px; }
         input:focus { border-color: var(--primary-green); background: #ffffff; }
-        .btn-submit { width: auto; min-width: 240px; background-color: var(--primary-green); color: white; padding: 15px 30px; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; font-size: 1rem; }
-        .btn-small.secondary { min-width: 120px; }
+        .btn-submit { width: auto; min-width: 240px; background-color: var(--primary-green); color: white; padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px); border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem); }
+        .btn-small.secondary { min-width: 100px; }
         .btn-submit:hover { background-color: var(--dark-bg); }
 
+        /* ===== RESPONSIVE LOGIN ===== */
+
+        /* ===== RESPONSIVE PANEL ===== */
+
+        @media (max-width: 1024px) {
+            .admin-container { padding: 20px; }
+            .table-actions { gap: 10px; }
+        }
+
         @media (max-width: 900px) {
-            body { padding: 14px; }
-            .admin-container { padding: 24px; }
-            .dashboard-header { flex-direction: column; align-items: stretch; }
+            body { padding: 12px; }
+            .admin-container { padding: 20px; border-radius: 18px; }
+            .dashboard-header { flex-direction: column; align-items: stretch; gap: 10px; }
             .dashboard-header > div { width: 100%; }
-            .cards-row, .stats-row { grid-template-columns: 1fr; }
-            .cards-row { gap: 14px; }
-            .stats-row { gap: 14px; }
-            .controls-row { flex-direction: column; align-items: stretch; gap: 14px; }
-            .controls-left { flex-direction: column; width: 100%; }
-            .controls-left input, .controls-left select { min-width: 100%; width: 100%; }
-            .table-actions { justify-content: flex-start; width: 100%; flex-wrap: wrap; }
-            .table-actions select, .table-actions .btn-small { min-width: 120px; width: auto; }
-            .panel-section { padding: 20px; }
-            .form-card { padding: 22px; }
-            .actions-row { justify-content: stretch; }
-            .btn-small, .btn-submit { width: 100%; min-width: 0; }
-            .btn-submit { padding: 14px 16px; }
+            .update-widget { max-width: 100%; width: 100%; align-items: center; text-align: center; border-radius: 14px; }
+            .cards-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .stats-row { grid-template-columns: 1fr; gap: 12px; }
+            .controls-row { flex-direction: column; align-items: stretch; gap: 10px; }
+            .controls-left { flex-direction: column; width: 100%; min-width: 0; }
+            .controls-left input, .controls-left select { min-width: 100%; width: 100%; flex: auto; }
+            .table-actions { justify-content: stretch; width: 100%; flex-wrap: wrap; gap: 8px; }
+            .table-actions select { flex: 1; min-width: 80px; }
+            .table-actions .btn-small { flex: 1; min-width: 100px; text-align: center; }
+            .panel-section { padding: 18px; border-radius: 18px; }
+            .form-card { padding: 18px; border-radius: 18px; }
+            .grid-form { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .actions-row { grid-column: span 2; gap: 10px; }
+            .btn-submit { padding: 12px 16px; }
         }
 
         @media (max-width: 680px) {
-            .admin-container { border-radius: 22px; }
-            .card-summary, .stats-card, .panel-section, .form-card { padding: 18px; }
-            .dashboard-header { gap: 12px; }
-            .dashboard-header h1 { font-size: 1.8rem; }
-            .subtext { font-size: 0.92rem; }
-            .controls-left input, .controls-left select, .table-actions select { font-size: 0.95rem; }
-            .table-wrapper { margin-bottom: 16px; }
-            table { min-width: 0; }
-            thead th, td { padding: 12px 10px; font-size: 0.82rem; text-align: left; }
+            body { padding: 10px; }
+            .admin-container { border-radius: 16px; padding: 16px; }
+            .card-summary, .stats-card, .panel-section, .form-card { padding: 14px; border-radius: 16px; }
+            .loading-overlay { border-radius: 16px; }
+            .dashboard-header { gap: 10px; }
+            .dashboard-header h1 { font-size: clamp(1.3rem, 6vw, 1.8rem); }
+            .subtext { font-size: clamp(0.8rem, 2.5vw, 0.92rem); }
+            .update-widget { min-width: auto; max-width: 100%; width: 100%; padding: 8px 12px; border-radius: 12px; flex-direction: row; justify-content: space-between; align-items: center; gap: 8px; }
+            .update-widget .update-label { font-size: clamp(0.65rem, 1.5vw, 0.78rem); }
+            .update-widget .update-value { font-size: clamp(0.85rem, 2vw, 1rem); }
+            .update-widget .update-note { font-size: clamp(0.6rem, 1.5vw, 0.72rem); display: none; }
+            .cards-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .controls-left input, .controls-left select, .table-actions select { font-size: clamp(0.85rem, 2vw, 0.95rem); }
+            .table-wrapper { margin-bottom: 12px; -webkit-overflow-scrolling: touch; border-radius: 14px; border: 1px solid #c7e8d7; }
+            table { min-width: 100%; font-size: clamp(0.75rem, 2vw, 0.92rem); }
+            thead th, td { padding: clamp(10px, 2vw, 12px); font-size: clamp(0.75rem, 1.8vw, 0.82rem); text-align: left; }
             thead th:first-child, thead th:last-child { border-radius: 0; }
-            tbody tr { display: block; margin-bottom: 14px; border-radius: 18px; box-shadow: 0 12px 24px rgba(0,0,0,0.05); }
-            tbody tr td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e9f3ef; }
+            tbody tr { display: block; margin-bottom: 12px; border-radius: 14px; box-shadow: 0 8px 18px rgba(0,0,0,0.04); }
+            tbody tr td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e9f3ef; padding: clamp(10px, 2vw, 12px); }
             tbody tr td:last-child { border-bottom: none; }
-            tbody tr td::before { content: attr(data-label); flex: 1; color: #5a7a70; font-weight: 700; margin-right: 8px; }
+            tbody tr td::before { content: attr(data-label); flex: 0 0 auto; color: #5a7a70; font-weight: 700; margin-right: 8px; font-size: clamp(0.7rem, 1.5vw, 0.8rem); }
             tbody tr td:nth-child(1)::before { content: "ID"; }
             tbody tr td:nth-child(2)::before { content: "Nombre"; }
             tbody tr td:nth-child(3)::before { content: "Apellidos"; }
@@ -160,12 +206,40 @@
             tbody tr td:nth-child(6)::before { content: "País"; }
             tbody tr td:nth-child(7)::before { content: "Tel"; }
             tbody tr td:nth-child(8)::before { content: "Acciones"; }
-            .stat-country { font-size: 0.82rem; }
+            .stat-country { font-size: clamp(0.75rem, 1.8vw, 0.82rem); }
             .metric-row { flex-direction: column; align-items: flex-start; gap: 4px; }
-            .progress-label { text-align: left; }
-            .grid-form { grid-template-columns: 1fr; }
-            .actions-row { flex-direction: column; align-items: stretch; gap: 10px; }
-            .admin-container { padding: 20px; }
+            .progress-label { text-align: left; font-size: clamp(0.75rem, 1.8vw, 0.88rem); }
+            .grid-form { grid-template-columns: 1fr; gap: 10px; }
+            .actions-row { flex-direction: column; align-items: stretch; gap: 8px; grid-column: span 1; }
+            .btn-action { padding: clamp(6px, 1.5vw, 7px) clamp(8px, 2vw, 10px); font-size: clamp(0.7rem, 1.5vw, 0.82rem); margin: 0 1px; }
+            .card-summary .card-label, .card-summary .card-note { font-size: clamp(0.75rem, 1.8vw, 0.85rem); }
+            .btn-submit { min-width: 0; width: 100%; }
+            .btn-small { width: auto; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 8px; }
+            .admin-container { padding: 12px; border-radius: 14px; }
+            .dashboard-header { gap: 8px; }
+            .dashboard-header h1 { font-size: clamp(1.1rem, 7vw, 1.5rem); margin-bottom: 8px; }
+            .cards-row { grid-template-columns: 1fr; gap: 8px; }
+            .card-summary, .stats-card, .panel-section, .form-card { padding: 12px; border-radius: 12px; }
+            .controls-row { gap: 8px; }
+            .controls-left { gap: 8px; }
+            .controls-left input, .controls-left select { min-height: 44px; padding: 11px 12px; }
+            .btn-small, .btn-submit, .btn-action { min-height: 44px; padding: 10px 12px; font-size: 0.8rem; }
+            .btn-submit { min-height: 48px; font-size: 0.9rem; }
+            .table-wrapper { overflow-x: auto; }
+            thead th { padding: clamp(8px, 1.5vw, 10px); }
+            tbody tr td { padding: clamp(8px, 1.5vw, 10px); }
+            .stat-country, .metric-row { font-size: clamp(0.7rem, 1.5vw, 0.8rem); }
+            .form-note { font-size: clamp(0.85rem, 2vw, 1rem); }
+            .table-actions { gap: 6px; }
+            .update-widget { padding: 6px 10px; }
+            .update-widget .update-label { font-size: 0.65rem; }
+            .update-widget .update-value { font-size: 0.82rem; }
+            .page-btn { width: 34px; height: 34px; }
+            #pageInfo { font-size: 0.82rem; }
         }
     </style>
 </head>
@@ -187,7 +261,145 @@ const API = "https://curso-ia-back-cursos-ia.nsueba.easypanel.host/api/Docentes"
 const registrosPorPagina = 15;
 const emptyForm = { id: "", nombres: "", apellidos: "", correo: "", ciudad: "", pais: "", telefono: "" };
 
-function AdminPanel() {
+// ===== CONFIGURACIÓN DEL BACKEND =====
+const AUTH_API = "/api/auth";
+const TOKEN_KEY = "playdiom_jwt_token";
+
+// ===== UTILIDADES DE SESIÓN =====
+function getToken() {
+    return localStorage.getItem(TOKEN_KEY);
+}
+
+function saveToken(token) {
+    localStorage.setItem(TOKEN_KEY, token);
+}
+
+function clearToken() {
+    localStorage.removeItem(TOKEN_KEY);
+}
+
+async function isSessionValid() {
+    const token = getToken();
+    if (!token) return false;
+    try {
+        const res = await fetch(`${AUTH_API}/verify`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (!res.ok) {
+            clearToken();
+            return false;
+        }
+        const data = await res.json();
+        return data.valid === true;
+    } catch {
+        clearToken();
+        return false;
+    }
+}
+
+async function loginToBackend(username, password) {
+    const res = await fetch(`${AUTH_API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.error || "Credenciales incorrectas");
+    }
+    saveToken(data.token);
+    return data;
+}
+
+// ===== COMPONENTE LOGIN =====
+function LoginScreen({ onLogin }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [shake, setShake] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const userRef = useRef(null);
+
+    useEffect(() => {
+        if (userRef.current) userRef.current.focus();
+    }, []);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError("");
+        if (!username.trim() || !password.trim()) {
+            setError("Por favor ingresa usuario y contraseña.");
+            setShake(true);
+            setTimeout(() => setShake(false), 500);
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await loginToBackend(username.trim(), password.trim());
+            onLogin();
+        } catch (err) {
+            setError(err.message || "Credenciales incorrectas. Intenta de nuevo.");
+            setShake(true);
+            setTimeout(() => setShake(false), 500);
+            setPassword("");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return (
+        <div className="login-overlay">
+            <div className="login-card" style={shake ? { animation: "shake 0.4s ease" } : {}}>
+                <div className="login-logo">🔐</div>
+                <h2>Panel Admin</h2>
+                <p className="login-sub">Inicia sesión para acceder al panel de administración</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="login-field">
+                        <label htmlFor="loginUser">Usuario</label>
+                        <input
+                            ref={userRef}
+                            id="loginUser"
+                            type="text"
+                            placeholder="Ingresa tu usuario"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            autoComplete="username"
+                        />
+                    </div>
+                    <div className="login-field">
+                        <label htmlFor="loginPass">Contraseña</label>
+                        <input
+                            id="loginPass"
+                            type="password"
+                            placeholder="Ingresa tu contraseña"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            autoComplete="current-password"
+                        />
+                    </div>
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? "Verificando..." : "Iniciar Sesión"}
+                    </button>
+                </form>
+                {error && <div className="login-error show">{error}</div>}
+                <p className="login-footer">Playdiom &copy; {new Date().getFullYear()} — Panel de Administración</p>
+            </div>
+            <style>{`
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    20% { transform: translateX(-10px); }
+                    40% { transform: translateX(10px); }
+                    60% { transform: translateX(-6px); }
+                    80% { transform: translateX(6px); }
+                }
+            `}</style>
+        </div>
+    );
+}
+
+// ===== COMPONENTE ADMIN PANEL =====
+function AdminPanel({ onLogout }) {
     const [docentes, setDocentes] = useState([]);
     const [search, setSearch] = useState("");
     const [country, setCountry] = useState("all");
@@ -409,6 +621,11 @@ function AdminPanel() {
 
     const headerClasses = col => `sort-header ${sortColumn === col ? `sorted ${sortDirection === 1 ? "asc" : "desc"}` : ""}`;
 
+    function handleLogout() {
+        clearToken();
+        onLogout();
+    }
+
     return (
         <div className="admin-container">
             <div className="dashboard-header">
@@ -416,10 +633,15 @@ function AdminPanel() {
                     <h1>Panel de Administración</h1>
                     <p className="subtext">Accede y gestiona los registros de docentes con tu paleta de colores.</p>
                 </div>
-                <div className="update-widget">
-                    <span className="update-label">Última actualización</span>
-                    <span className="update-value">{ultimaActualizacion}</span>
-                    <span className="update-note">Fecha y hora de la carga</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                    <div className="update-widget">
+                        <span className="update-label">Última actualización</span>
+                        <span className="update-value">{ultimaActualizacion}</span>
+                        <span className="update-note">Fecha y hora de la carga</span>
+                    </div>
+                    <button type="button" className="logout-btn" onClick={handleLogout} title="Cerrar sesión">
+                        🚪 Cerrar sesión
+                    </button>
                 </div>
             </div>
             <div className="cards-row">
@@ -586,7 +808,45 @@ function AdminPanel() {
     );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<AdminPanel />);
+// ===== COMPONENTE APP PRINCIPAL =====
+function App() {
+    const [authenticated, setAuthenticated] = useState(false);
+    const [checking, setChecking] = useState(true);
+
+    useEffect(() => {
+        isSessionValid().then(valid => {
+            setAuthenticated(valid);
+            setChecking(false);
+        });
+    }, []);
+
+    function handleLogin() {
+        setAuthenticated(true);
+    }
+
+    function handleLogout() {
+        setAuthenticated(false);
+    }
+
+    if (checking) {
+        return (
+            <div className="login-overlay">
+                <div className="login-card">
+                    <div className="login-logo">🔐</div>
+                    <h2>Cargando...</h2>
+                </div>
+            </div>
+        );
+    }
+
+    if (!authenticated) {
+        return <LoginScreen onLogin={handleLogin} />;
+    }
+
+    return <AdminPanel onLogout={handleLogout} />;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 
 </body>
