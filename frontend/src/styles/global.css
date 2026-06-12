@@ -1,0 +1,105 @@
+/* ===== CSS VARIABLES ===== */
+:root {
+  --primary-green: #00a884;
+  --dark-bg: #075e54;
+  --light-gray: #f0f4f3;
+  --white: #ffffff;
+  --text-dark: #2c3e50;
+  --bg-page: #dff4ea;
+  --bg-card: #ecfdf5;
+  --border-card: rgba(0, 120, 90, 0.15);
+  --shadow-card: 0 18px 45px rgba(0, 0, 0, 0.08);
+  --radius-card: 20px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  margin: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 168, 132, 0.3);
+  border-radius: 999px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== UTILITY ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== RESPONSIVE BODY ===== */
+@media (max-width: 900px) {
+  body { padding: 12px; }
+}
+
+@media (max-width: 680px) {
+  body { padding: 10px; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 8px; }
+}

@@ -1,0 +1,202 @@
+/* ===== ADMIN CONTAINER ===== */
+.admin-container {
+  width: 100%;
+  max-width: 1200px;
+  background: #ecfdf5;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 120, 90, 0.15);
+  box-sizing: border-box;
+}
+
+/* ===== HEADER ===== */
+.dashboard-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.dashboard-header h1 {
+  color: var(--dark-bg);
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  margin: 0 0 10px;
+  font-weight: 800;
+}
+
+.dashboard-header .subtext {
+  margin: 0;
+  color: #215844;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ===== UPDATE WIDGET ===== */
+.update-widget {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  padding: clamp(8px, 2vw, 10px) clamp(10px, 2.5vw, 14px);
+  background: rgba(0, 168, 132, 0.14);
+  border: 1px solid #9adeca;
+  border-radius: 999px;
+  min-width: 140px;
+  max-width: 200px;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
+
+.update-widget .update-label {
+  font-size: clamp(0.65rem, 1.5vw, 0.78rem);
+  color: #1d5d49;
+  opacity: 0.9;
+}
+
+.update-widget .update-value {
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 700;
+  color: var(--dark-bg);
+}
+
+.update-widget .update-note {
+  font-size: clamp(0.6rem, 1.5vw, 0.72rem);
+  color: #3c6e60;
+  opacity: 0.85;
+  line-height: 1.1;
+}
+
+/* ===== LOGOUT BUTTON ===== */
+.logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  background-color: var(--primary-green);
+}
+
+.logout-btn:hover {
+  background-color: var(--dark-bg);
+  transform: translateY(-1px);
+}
+
+/* ===== RESPONSIVE ADMIN PANEL ===== */
+@media (max-width: 1024px) {
+  .admin-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-container {
+    padding: 20px;
+    border-radius: 18px;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .dashboard-header > div {
+    width: 100%;
+  }
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .update-widget {
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 680px) {
+  .admin-container {
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .dashboard-header {
+    gap: 10px;
+  }
+  .dashboard-header h1 {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+  .subtext {
+    font-size: clamp(0.8rem, 2.5vw, 0.92rem);
+  }
+  .update-widget {
+    min-width: auto;
+    max-width: 100%;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .update-widget .update-label {
+    font-size: clamp(0.65rem, 1.5vw, 0.78rem);
+  }
+  .update-widget .update-value {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+  }
+  .update-widget .update-note {
+    font-size: clamp(0.6rem, 1.5vw, 0.72rem);
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-container {
+    padding: 12px;
+    border-radius: 14px;
+  }
+  .dashboard-header {
+    gap: 8px;
+  }
+  .dashboard-header h1 {
+    font-size: clamp(1.1rem, 7vw, 1.5rem);
+    margin-bottom: 8px;
+  }
+  .header-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .update-widget {
+    padding: 6px 10px;
+  }
+  .update-widget .update-label {
+    font-size: 0.65rem;
+  }
+  .update-widget .update-value {
+    font-size: 0.82rem;
+  }
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}

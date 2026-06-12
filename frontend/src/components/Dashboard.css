@@ -1,0 +1,197 @@
+/* ===== CARDS ROW ===== */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.card-summary {
+  background: linear-gradient(135deg, #f2fff8, #ddf7e7);
+  border: 1px solid #c3e8d3;
+  border-radius: 20px;
+  padding: clamp(16px, 4vw, 20px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.04);
+}
+
+.card-summary:first-child {
+  background: linear-gradient(135deg, #e8fff5, #cdefde);
+}
+
+.card-summary:nth-child(2) {
+  background: linear-gradient(135deg, #fffff7, #eaf7e7);
+}
+
+.card-summary .card-label {
+  display: block;
+  font-size: clamp(0.85rem, 2vw, 0.92rem);
+  color: #1a5f4f;
+  margin-bottom: 8px;
+}
+
+.card-summary .card-value {
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-weight: 800;
+  color: var(--dark-bg);
+}
+
+.card-summary .card-note {
+  margin-top: 10px;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  color: #3f6f5f;
+}
+
+/* ===== STATS ROW ===== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stats-card {
+  background: linear-gradient(180deg, #ffffff, #ecfff7);
+  border: 1px solid #bfe6d3;
+  border-radius: 20px;
+  padding: clamp(18px, 5vw, 22px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.05);
+}
+
+.stat-title {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--dark-bg);
+  font-size: clamp(0.95rem, 2.5vw, 1rem);
+  font-weight: 700;
+}
+
+/* ===== COUNTRY BARS ===== */
+.country-bars .stat-line {
+  display: grid;
+  grid-template-columns: 1.25fr 2fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.country-bars .stat-country {
+  color: #526a63;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.country-bars .bar-track {
+  width: 100%;
+  height: 10px;
+  background: #e9f6f1;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.country-bars .bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00a884, #075e54);
+  border-radius: 999px;
+}
+
+/* ===== CHART INFO ===== */
+.chart-info .metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #526a63;
+  font-size: 0.92rem;
+}
+
+.chart-info .metric-row strong {
+  color: #213b32;
+  font-size: 1rem;
+}
+
+/* ===== PROGRESS ===== */
+.progress-row {
+  margin-top: 18px;
+}
+
+.progress-row span {
+  display: block;
+  color: #526a63;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 14px;
+  background: #eaf7f1;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00a884, #075e54);
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  text-align: right;
+  color: #2c4e44;
+  font-size: 0.88rem;
+  margin-top: 8px;
+}
+
+/* ===== RESPONSIVE DASHBOARD ===== */
+@media (max-width: 900px) {
+  .cards-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 680px) {
+  .cards-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .card-summary, .stats-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+  .card-summary .card-label,
+  .card-summary .card-note {
+    font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+  }
+  .metric-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .progress-label {
+    text-align: left;
+    font-size: clamp(0.75rem, 1.8vw, 0.88rem);
+  }
+  .stat-country {
+    font-size: clamp(0.75rem, 1.8vw, 0.82rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .card-summary, .stats-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .stat-country, .metric-row {
+    font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  }
+}

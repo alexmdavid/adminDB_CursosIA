@@ -1,0 +1,143 @@
+/* ===== FORM CARD ===== */
+.form-card {
+  background: linear-gradient(180deg, #f2fff7, #e2f9ea);
+  border: 1px solid #bfe5d3;
+  border-radius: 20px;
+  padding: clamp(20px, 5vw, 26px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.05);
+}
+
+.form-note {
+  margin: 0 auto 18px auto;
+  font-size: 1rem;
+  color: var(--dark-bg);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ===== GRID FORM ===== */
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: clamp(14px, 3vw, 24px);
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.grid-form input {
+  padding: clamp(12px, 3vw, 14px);
+  border: 1.4px solid #badcc9;
+  border-radius: 12px;
+  outline: none;
+  font-size: clamp(0.9rem, 2vw, 0.95rem);
+  color: #364a45;
+  background: #f7fff8;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.grid-form input.invalid {
+  border-color: #e27d7d;
+  box-shadow: 0 0 0 3px rgba(226, 125, 125, 0.12);
+}
+
+.grid-form input:focus {
+  border-color: var(--primary-green);
+  background: #ffffff;
+}
+
+/* ===== ACTIONS ROW ===== */
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2;
+  margin-top: 14px;
+}
+
+.btn-submit {
+  width: auto;
+  min-width: 240px;
+  background-color: var(--primary-green);
+  color: white;
+  padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: var(--dark-bg);
+}
+
+.btn-small.secondary {
+  min-width: 100px;
+}
+
+/* ===== RESPONSIVE FORM ===== */
+@media (max-width: 900px) {
+  .form-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+  .grid-form {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .actions-row {
+    grid-column: span 2;
+    gap: 10px;
+  }
+  .btn-submit {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 680px) {
+  .form-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+  .grid-form {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .actions-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    grid-column: span 1;
+  }
+  .btn-submit {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .grid-form input {
+    min-height: 44px;
+    padding: 11px 12px;
+    font-size: 16px; /* prevents zoom on iOS */
+  }
+  .btn-small,
+  .btn-submit {
+    min-height: 48px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .form-note {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+  }
+}

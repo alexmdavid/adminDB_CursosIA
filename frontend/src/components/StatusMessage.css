@@ -1,0 +1,46 @@
+.status-message {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+.status-message.show {
+  display: flex;
+}
+
+.status-message.success {
+  background: rgba(2, 118, 83, 0.12);
+  color: #08563c;
+  border: 1px solid #86d2b4;
+}
+
+.status-message.error {
+  background: rgba(153, 27, 27, 0.12);
+  color: #7a1e1e;
+  border: 1px solid #edb7b7;
+}
+
+.status-message span {
+  flex: 1;
+}
+
+.status-message button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .status-message {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+}

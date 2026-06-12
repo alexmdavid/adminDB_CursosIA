@@ -18,7 +18,24 @@ COPY backend/ .
 # Compilar el binario
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin-backend .
 
-# ===== ETAPA 2: nginx para el frontend + backend =====
+# ===== ETAPA 2: Compilar el frontend React =====
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app/frontend
+
+# Copiar archivos de dependencias
+COPY frontend/package.json frontend/package-lock.json* ./
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar el código fuente del frontend
+COPY frontend/ .
+
+# Compilar el frontend
+RUN npm run build
+
+# ===== ETAPA 3: nginx para el frontend + backend =====
 FROM nginx:alpine
 
 # Instalar el binario del backend
@@ -27,8 +44,8 @@ COPY --from=builder /app/backend/admin-backend /usr/local/bin/admin-backend
 # Eliminar config default de nginx
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copiar el frontend (solo el index.html)
-COPY index.html /usr/share/nginx/html/index.html
+# Copiar el frontend compilado (dist de Vite)
+COPY --from=frontend-builder /app/frontend/dist /usr/share/nginx/html
 
 # Copiar configuración de nginx para proxy reverso al backend
 COPY nginx.conf /etc/nginx/conf.d/default.conf
